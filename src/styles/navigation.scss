@@ -1,0 +1,23 @@
+@import "./_variables.scss";
+
+.furniture_navigation {
+    min-height: 100vh !important;
+    &__sub-item {
+        // .MuiCollapse-root {
+        //     max-height: 50px;
+        // }
+    }
+    .css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+        position: relative;
+    }
+    &__wrapper {
+        background-color: $primary_theme !important;
+    }
+    &__content {
+        min-height: 280px;
+        background-color: $light !important;
+        &__body {
+            //background-color: aliceblue;
+        }
+    }
+}

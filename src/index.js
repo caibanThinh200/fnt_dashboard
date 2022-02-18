@@ -1,12 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Section from './Routes/Section';
+import "./styles/index.scss";
+import './index.less';
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { Provider } from 'react-redux';
+import store from "./store"
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <Section />
+    </Provider>
+
   </React.StrictMode>,
   document.getElementById('root')
 );

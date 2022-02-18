@@ -1,0 +1,23 @@
+@import "./__variables.scss";
+
+.furniture_auth {
+    &__wrapper {
+        margin-top: 5%;
+        border-radius: 10px;
+        animation: fadeIn 2s forwards
+    }
+    &__title {
+        color: $greenWood;
+    }
+    
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        margin-top: 200px;
+    }
+    to {
+        opacity: 1;
+    }
+}

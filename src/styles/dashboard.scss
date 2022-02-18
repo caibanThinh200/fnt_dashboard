@@ -1,0 +1,35 @@
+@import "./__variables.scss";
+
+.furniture_dashboard {
+    &__title {
+        color: $greenWood;   
+    }
+    &__data {
+        &__box {
+            &--revenue {
+                background-color: rgb(49, 119, 211);
+            }
+            &--approve {
+                background-color: rgb(124, 139, 53);
+            }
+            &--cancel {
+                background-color: red;
+            }
+            &--phone_order {
+                background-color: $greenWood
+            }
+        }
+        &--revenue {
+            color: $light
+        }
+        &--approve {
+            color: $light
+        }
+        &--cancel {
+            color: $light
+        }
+        &--phone_order {
+            color: $light
+        }
+    }
+}
