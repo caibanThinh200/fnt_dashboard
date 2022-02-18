@@ -11,7 +11,6 @@ import { Button, Collapse, Divider, Input, message, Select, Space, Tag, Upload a
 import AttributeThunk from "../../../thunk/attributeThunk";
 import FormAction from "../../../Component/FormAction";
 import Icon from "../../../Component/Icon";
-import Form from "../../../../../azp-website/node_modules/antd/lib/form/Form";
 import _, { find } from "lodash";
 
 const ProductTypeAction = props => {
