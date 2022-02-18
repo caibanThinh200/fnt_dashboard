@@ -18,8 +18,8 @@ export default class ProductRequest {
         this.is_percent = data?.isPercent || false;
         this.price = data?.price || 0;
         this.status = data?.status || 1;
-        this.mainThumb = (data?.main_thumb || []).map(thumb => ({...thumb, url: thumb?.response?.url || ""})) || [];
-        this.subThumb = (data?.sub_thumb || []).map(thumb => ({...thumb, url: thumb?.response?.url || ""})) || [];
+        this.mainThumb = (data?.main_thumb || []).map(thumb => ({...thumb, url: thumb?.response?.url || thumb?.url || ""})) || [];
+        this.subThumb = (data?.sub_thumb || []).map(thumb => ({...thumb, url: thumb?.response?.url || thumb?.url || ""})) || [];
         this.product_type = data?.product_type || 1;
         this.category = data?.category || "";
         this.created_at = data?.created_at || "";
