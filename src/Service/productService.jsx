@@ -7,7 +7,7 @@ import { get } from 'lodash';
 
 export const getListService = (params) => {
     return new ApiService({
-        baseURL: process.env.REACT_APP_FURNITURE_HOST || "",
+        baseURL: process.env.REACT_APP_FURNITURE_DEV_HOST || "",
         endpoint: Urls.PRODUCT.getList,
         params: params,
         parser: parseData

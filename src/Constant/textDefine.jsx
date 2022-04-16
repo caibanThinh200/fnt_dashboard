@@ -49,8 +49,10 @@ const TEXT_DEFINE = {
             code: "Mã thông số",
             filterValues: "Giá trị lọc",
             filterType: "Công cụ lọc",
+            valueType: "Kiểu giá trị",
             action: "Thao tác",
-            required: "Bắt buộc",
+            required: "Bắt buộc phải có giá trị",
+            required_field: "Bắt buộc phải có trong loại sản phẩm",
             status: "Trạng thái",
             action: "Thao tác"
         },
@@ -88,6 +90,17 @@ const TEXT_DEFINE = {
             status: "Trạng thái",
             code: "Mã danh mục",
             mainThumb: "Ảnh đại diện",
+            action: "Thao tác"
+        },
+        ORDER: {
+            title: "Đơn hàng",
+            phone: "Số điện thoại",
+            total: "Tổng đơn hàng",
+            customer_name: "Tên khách hàng",
+            created_at: "Ngày tạo",
+            updated_at: "Ngày cập nhật",
+            status: "Trạng thái",
+            code: "Mã đơn hàng",
             action: "Thao tác"
         },
         DISCOUNT_EVENT: {

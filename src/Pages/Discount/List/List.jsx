@@ -8,14 +8,14 @@ import { DISCOUNT_CONSTANT } from "../../../Mapping/Response/discountResponse";
 const List = props => {
     const columns = [
         {
-            title: TEXT_DEFINE.PAGE.DISCOUNT_EVENT.name,
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
             title: TEXT_DEFINE.PAGE.DISCOUNT_EVENT.code,
             dataIndex: 'code',
             key: 'code',
+        },
+        {
+            title: TEXT_DEFINE.PAGE.DISCOUNT_EVENT.name,
+            dataIndex: 'name',
+            key: 'name',
         },
         {
             title: TEXT_DEFINE.PAGE.DISCOUNT_EVENT.created_at,
@@ -64,6 +64,7 @@ const List = props => {
         <Table 
             rowKey="id"
             bordered
+            onChange={props.onTableChange}
             columns={columns}
             loading={props.isLoading}
             dataSource={props.dataSource}

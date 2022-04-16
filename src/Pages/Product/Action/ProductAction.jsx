@@ -16,6 +16,8 @@ import { lowercaseFirstLetter } from "../../../Util/function";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CkEditorUploadAdapter from "../../../Mapping/Request/CkEditorUploadAdapter";
+import { PRODUCT_CONSTANT } from "../../../Mapping/Response/productResponse";
+import { find, get } from "lodash";
 
 const ProductAction = props => {
     const params = useParams(),
@@ -116,28 +118,6 @@ const ProductAction = props => {
         }
     }, [props.products]);
 
-    const custom_config = {
-        // extraPlugins: [ImageResizeEditing],
-        toolbar: {
-            items: [
-                'heading',
-                '|',
-                'bold',
-                'italic',
-                'link',
-                'bulletedList',
-                'numberedList',
-                '|',
-                'blockQuote',
-                'insertTable',
-                '|',
-                'imageUpload',
-                'undo',
-                'redo'
-            ]
-        }
-    }
-
     const customContentStateConverter = (contentState) => {
         // changes block type of images to 'atomic'
         const newBlockMap = contentState.getBlockMap().map((block) => {
@@ -207,6 +187,15 @@ const ProductAction = props => {
         }
     }
 
+    const getDatasource = (id) => {
+        if (Object.keys(productType.item).length > 0) {
+            const filterParams = productType.item?.filter[id]?.value || [];
+            return filterParams.map(item => item ? ({ label: item, value: item }) : []);
+        } else {
+            return []
+        }
+    }
+
     const handleSubmit = e => {
         let newPayload = { ...e, ...routeProps, status: 2 };
         if (Object.keys(e).length > 0) {
@@ -219,10 +208,6 @@ const ProductAction = props => {
                     });
                     newPayload = _.omit({ ...newPayload, ...attributeObj }, [item]);
                 }
-                // if (item === "detailDescription") {
-                //     const htmlContent = draftToHTML(e[item]);
-                //     newPayload = { ...newPayload, [item]: htmlContent }
-                // }
             });
         };
         if (!params.id) {
@@ -244,7 +229,9 @@ const ProductAction = props => {
                 </li>
                 <li className="d-inline me-4">
                     <span className="me-2">Trạng thái:</span>
-                    <span><Tag color={"blue"}>Khởi tạo</Tag></span>
+                    <span><Tag color={get(find(PRODUCT_CONSTANT.STATUS_DEFINE, { value: form.getFieldValue("status") }), "color")}>
+                        {get(find(PRODUCT_CONSTANT.STATUS_DEFINE, { value: form.getFieldValue("status") }), "title")}    
+                    </Tag></span>
                 </li>
             </ul>
         </Wrapper>
@@ -253,6 +240,7 @@ const ProductAction = props => {
             <FormAction
                 action={actionMethod}
                 formProps={{
+                    onFinishFailed: e => message.error("Chưa đủ điều kiện để xác nhận, vui lòng kiểm tra lại các trường"),
                     onFieldsChange: onFieldsChange,
                     className: "row",
                     layout: {
@@ -354,11 +342,30 @@ const ProductAction = props => {
                 </Wrapper>
                 <Wrapper className={'col-6'}>
                     {
-                        (productType.item.attributes || []).length > 0 && <Collapse className="mb-5">
-                            <Collapse.Panel header={`Thông số của loại sản phẩm ${productType.item?.name && productType.item?.name}`}>
-                                {(productType.item.attributes || []).map(item => <FormItem key={item.id} name={`attributes.${item.id}`} label={item.name}>
-                                    <Input />
+                        (productType.item.attributes || []).length > 0 && <Collapse accordion className="mb-5">
+                            <Collapse.Panel forceRender header={`Thông số của loại sản phẩm ${productType.item?.name && productType.item?.name}`}>
+                                {(productType.item.attributes || []).map(item => <FormItem
+                                    rules={[{ required: item?.require, message: 'Trường thông số này không được trống' }]}
+                                    required={item?.require}
+                                    key={item.id}
+                                    name={`attributes.${item.id}`}
+                                    label={item.name}
+                                >
+                                    {
+                                        item?.value_type === 2 ? <Select
+                                            showSearch
+                                            options={getDatasource(item.id)}
+                                            placeholder="Chọn hoặc nhập thông số"
+                                            notFoundContent={null}
+                                        // optionFilterProp="children"
+                                        // filterOption={(input, option) =>
+                                        //     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                        // }
+                                        >
+                                        </Select> : <Select mode="tags" placeholder="Trường này cho phép nhập nhiều giá trị"></Select>
+                                    }
                                 </FormItem>)}
+                                <span><Icon type="warning" /> Lưu ý: Nếu nhập thông số mới thay vì chọn giá trị có sẵn thì sẽ không có kết quả lọc</span>
                             </Collapse.Panel>
                         </Collapse>
                     }
@@ -485,8 +492,8 @@ const ProductAction = props => {
                                 };
                                 // console.log("Editor is ready to use!", editor);
                             }}
-                            // config={custom_config}
-                            // plugins={[Image, ImageResizeEditing, ImageResizeHandles,]}
+                        // config={custom_config}
+                        // plugins={[Image, ImageResizeEditing, ImageResizeHandles,]}
                         />
                     </FormItem>
                 </Wrapper>

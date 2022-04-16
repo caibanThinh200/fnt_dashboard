@@ -26,4 +26,5 @@ export default createReducer(initialState, reducer => {
         .addCase(ActionType.getListAllAccessorySuccess, (state, action) => ({...state, isAccessoryFetching: false, ...(action).payload, all: (action).payload?.result, result: []}))
         .addCase(ActionType.getDetailAccessorySuccess, (state, action) => ({...state, isAccessoryFetching: false, item: (action).payload}))
         .addCase(ActionType.updateAccessorySuccess, (state, action) => ({...state, isAccessoryFetching: false}))
+        .addCase(ActionType.clearAccessoryAction, () => initialState)
 })

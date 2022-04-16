@@ -7,7 +7,10 @@ import Wrapper from "../../../Component/Wrapper";
 import TEXT_DEFINE from "../../../Constant/textDefine";
 import categoryThunk from "../../../thunk/categoryThunk";
 import ProductTypeThunk from "../../../thunk/productTypeThunk";
+import { genaratePaginateFilterSort, removeObjectEmptyValue } from "../../../Util/function";
 import List from "./List";
+import queryString from "query-string"
+import { omit } from "lodash";
 
 const CategoryList = props => {
     const [productType, setProductType] = useState({
@@ -15,11 +18,17 @@ const CategoryList = props => {
         result: [],
         item: {}
     }),
+    [filter, setFilter] = useState({}),
     routeProps = useOutletContext();
 
     useEffect(() => {
-        props.getList();                   
-    }, [])
+        let filterParams = {}
+        if (routeProps.location?.search) {
+            filterParams = queryString.parse(routeProps.location?.search);
+            setFilter(filterParams);
+        }
+        props.getList(filterParams);
+    }, [routeProps.location]);
 
     useEffect(() => {
         setProductType({
@@ -27,6 +36,14 @@ const CategoryList = props => {
             result: props.productTypes?.result,
         })
     }, [props.productTypes])
+
+    const onTableChange = (pagination, filters, sorter) => {
+        const newFilter = genaratePaginateFilterSort(pagination, filters, sorter);
+        setFilter({ ...filter, ...newFilter });
+        props.getList(removeObjectEmptyValue({ ...filter, ...newFilter }));
+        const queryFilter = queryString.stringify(removeObjectEmptyValue({ ...filter, ...newFilter }));
+        routeProps.navigate("/product?" + queryFilter);
+    }
 
     const pagination = {
         page_index: props.productTypes.page_index || 1,
@@ -39,6 +56,7 @@ const CategoryList = props => {
         <List
             routeProps={routeProps}
             // typeResult={productType.result}
+            onTableChange={onTableChange}
             isLoading={productType.isFetching}
             pagination={pagination}
             dataSource={productType.result}

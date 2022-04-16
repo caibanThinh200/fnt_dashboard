@@ -8,6 +8,7 @@ import billReportReducer from "./billReportReducer";
 import dashBoardReducer from './dashboardReducer';
 import uploadReducer from "./uploadReducer";
 import discountReducer from "./discountReducer";
+import orderReducer from "./orderReducer";
 
 export default combineReducers({
     authReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
     billReportReducer,
     dashBoardReducer,
     uploadReducer,
-    discountReducer
+    discountReducer,
+    orderReducer
 })

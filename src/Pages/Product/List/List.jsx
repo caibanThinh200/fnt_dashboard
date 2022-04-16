@@ -8,25 +8,35 @@ import { PRODUCT_CONSTANT } from "../../../Mapping/Response/productResponse";
 const List = props => {
     const columns = [
         {
-            title: TEXT_DEFINE.PAGE.PRODUCT.name,
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
             title: TEXT_DEFINE.PAGE.PRODUCT.code,
             dataIndex: 'code',
             key: 'code',
         },
         {
+            title: TEXT_DEFINE.PAGE.PRODUCT.name,
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
             title: TEXT_DEFINE.PAGE.PRODUCT.type,
+            width: 200,
             dataIndex: 'product_type',
             key: 'product_type',
             render: value => find(props.typeResult, {id: value})?.name || ""
         },
         {
+            title: TEXT_DEFINE.PAGE.PRODUCT.category,
+            dataIndex: 'category',
+            key: 'category',
+            render: value => find(props.categoryResult, {id: value})?.name || ""
+        },
+        {
             title: TEXT_DEFINE.PAGE.PRODUCT.price,
             dataIndex: 'price',
-            key: 'price'
+            key: 'price',
+            sorter: (a, b) => {
+                return a.price - b.price
+            }
         },
         {
             title: TEXT_DEFINE.PAGE.PRODUCT.created_at,
@@ -53,12 +63,14 @@ const List = props => {
 
     return <Wrapper>
         <Table 
+            scroll={{x: 2000}}
             rowKey="id"
             bordered
             columns={columns}
             loading={props.isLoading}
             dataSource={props.dataSource}
             pagination={props.pagination}
+            onChange={props.onTableChange}
         />
     </Wrapper>
 }

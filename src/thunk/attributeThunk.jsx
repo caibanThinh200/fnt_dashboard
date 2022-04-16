@@ -71,12 +71,17 @@ const update = (id, data) => async dispatch => {
     }
 }
 
+const clear = () => async dispatch => {
+    dispatch(AccessoryAction.clearAccessoryAction());
+}
+
 const AttributeThunk = {
     getListAll,
     getList, 
     create,
     update,
-    getDetail
+    getDetail,
+    clear
 }
 
 export default AttributeThunk;                            

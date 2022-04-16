@@ -7,6 +7,8 @@ import TEXT_DEFINE from "../../../Constant/textDefine";
 import { useOutletContext } from "react-router-dom";
 import HeaderAction from "../../../Component/HeaderAction";
 import List from "./List";
+import { genaratePaginateFilterSort, removeObjectEmptyValue } from "../../../Util/function";
+import queryString from "query-string";
 
 const DiscountList = props => {
     const routeProps = useOutletContext(),
@@ -14,7 +16,8 @@ const DiscountList = props => {
             isFetching: false,
             result: [],
             item: {}
-        });
+        }),
+        [filter, setFilter] = useState({});
 
     useEffect(() => {
         props.getList();
@@ -34,10 +37,28 @@ const DiscountList = props => {
         total: props.discounts.total || 0
     }
 
+    useEffect(() => {
+        let filterParams = {}
+        if(routeProps.location?.search) {
+            filterParams = queryString.parse(routeProps.location?.search);
+            setFilter(filterParams);
+        }
+        props.getList(filterParams);
+    }, [routeProps.location]);
+
+    const onTableChange = (pagination, filters, sorter) => {
+        const newFilter = genaratePaginateFilterSort(pagination, filters, sorter);
+        setFilter({ ...filter, ...newFilter });
+        props.getList(removeObjectEmptyValue({ ...filter, ...newFilter }));
+        const queryFilter = queryString.stringify(removeObjectEmptyValue({ ...filter, ...newFilter }));
+        routeProps.navigate("/discount?" + queryFilter);
+    }
+
     return <Wrapper className={"mt-5"}>
         <HeaderAction title={TEXT_DEFINE.PAGE.DISCOUNT_EVENT.title} isCreate onCreate={() => routeProps.navigate("/discount/action")} />
         <List
             routeProps={routeProps}
+            onTableChange={onTableChange}
             // typeResult={productType.result}
             handleUpdate={props.update}
             handleGetList={props.getList}

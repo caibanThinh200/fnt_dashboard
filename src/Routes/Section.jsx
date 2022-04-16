@@ -4,7 +4,6 @@ import {
   BrowserRouter,
 } from "react-router-dom"
 import SecureRoute from "./SecureRoute";
-import Dashboard from "../Pages/Dashboard";
 import Layout from "../Pages";
 import Authentication from "../Pages/Authentication";
 
@@ -13,7 +12,7 @@ const Section = props => {
     <Routes>
       <Route path="/auth" element={<Authentication/>}/>
       <Route path="/" element={<SecureRoute />}>
-        <Route path="" element={<Dashboard />} />
+        <Route path="" element={<Layout.Dashboard />} />
       </Route>
       <Route path="/product" element={<SecureRoute />}>
         <Route path="" element={<Layout.ProductList />} />

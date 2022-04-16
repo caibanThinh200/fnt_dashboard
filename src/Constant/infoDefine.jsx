@@ -10,6 +10,10 @@ const INFO_DEFINE = {
             value: 15, children: 15
         },
     ],
+    page_default: {
+        page_index: 1,
+        page_size: 10
+    },
     PAGE_ROUTE: {
         PRODUCT: {
             list: "/product",

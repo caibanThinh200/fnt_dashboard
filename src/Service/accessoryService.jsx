@@ -5,7 +5,7 @@ import AccessoryResponse from '../Mapping/Response/attributeResponse';
 
 export const getListService = (params) => {
     return new ApiService({
-        baseURL: process.env.REACT_APP_FURNITURE_HOST || "",
+        baseURL: process.env.REACT_APP_FURNITURE_DEV_HOST || "",
         endpoint: Urls.ATTRIBUTE.getList,
         params: params,
         parser: parseData
@@ -29,7 +29,7 @@ export const createService = data => {
 
 export const updateService = (id, data) => {
     return new ApiService({
-        baseURL: process.env.REACT_APP_FURNITURE_HOST || "",
+        baseURL: process.env.REACT_APP_FURNITURE_DEV_HOST || "",
         endpoint: Urls.ATTRIBUTE.update,
         endpointParams: {id},
     }).put(data);

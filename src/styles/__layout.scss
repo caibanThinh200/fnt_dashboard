@@ -1,7 +1,7 @@
 @import "__variables.scss";
 
 * {
-    font-weight: 500;
+    font-weight: 400;
     transition: all 0.25s ease-in-out;
 }
 
@@ -15,7 +15,6 @@ body {
 }
 
 html {
-    overflow: initial !important;
     height: 100%;
     min-height: 800px;
 }
@@ -33,9 +32,9 @@ li {
 }
 
 @include screen-xxl {
-    html ::-webkit-scrollbar {
-        display: none;
-    }
+    // html ::-webkit-scrollbar {
+    //     display: none;
+    // }
 }
 
 .ant-menu .ant-menu-dark .ant-layout-header {

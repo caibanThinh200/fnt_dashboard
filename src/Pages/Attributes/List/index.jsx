@@ -7,18 +7,17 @@ import TEXT_DEFINE from "../../../Constant/textDefine";
 import { useOutletContext } from "react-router-dom";
 import HeaderAction from "../../../Component/HeaderAction";
 import List from "./List";
+import { genaratePaginateFilterSort, removeObjectEmptyValue } from "../../../Util/function";
+import queryString from "query-string";
 
 const AttributeList = props => {
-    const routeProps = useOutletContext(), 
-    [attributes, setAttributes] = useState({
-        isFetching: false,
-        result: [],
-        item: {}
-    });
-
-    useEffect(() => {
-        props.getList();
-    }, []);
+    const routeProps = useOutletContext(),
+        [attributes, setAttributes] = useState({
+            isFetching: false,
+            result: [],
+            item: {}
+        }),
+        [filter, setFilter] = useState({});
 
     useEffect(() => {
         setAttributes({
@@ -28,6 +27,23 @@ const AttributeList = props => {
         })
     }, [props.attributes]);
 
+    useEffect(() => {
+        let filterParams = {}
+        if (routeProps.location?.search) {
+            filterParams = queryString.parse(routeProps.location?.search);
+            setFilter(filterParams);
+        }
+        props.getList(filterParams);
+    }, [routeProps.location]);
+
+    const onTableChange = (pagination, filters, sorter) => {
+        const newFilter = genaratePaginateFilterSort(pagination, filters, sorter);
+        setFilter({ ...filter, ...newFilter });
+        props.getList(removeObjectEmptyValue({ ...filter, ...newFilter }));
+        const queryFilter = queryString.stringify(removeObjectEmptyValue({ ...filter, ...newFilter }));
+        routeProps.navigate("/attribute?" + queryFilter);
+    };
+
     const pagination = {
         page_index: props.attributes.page_index || 1,
         page_size: props.attributes.page_size || 10,
@@ -35,14 +51,18 @@ const AttributeList = props => {
     }
 
     return <Wrapper className={"mt-5"}>
-        <HeaderAction title={TEXT_DEFINE.PAGE.ACCESSORY.title} isCreate onCreate={() => routeProps.navigate("/attribute/action")} />
+        <HeaderAction 
+            title={TEXT_DEFINE.PAGE.ACCESSORY.title}
+            isCreate
+            onCreate={() => routeProps.navigate("/attribute/action")} />
         <List
-        routeProps={routeProps}
-        // typeResult={productType.result}
-        isLoading={attributes.isFetching}
-        pagination={pagination}
-        dataSource={attributes.result}
-    />
+            routeProps={routeProps}
+            // typeResult={productType.result}
+            onTableChange={onTableChange}
+            isLoading={attributes.isFetching}
+            pagination={pagination}
+            dataSource={attributes.result}
+        />
     </Wrapper>
 }
 

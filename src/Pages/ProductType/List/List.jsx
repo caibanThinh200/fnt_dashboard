@@ -8,14 +8,14 @@ import { PRODUCT_TYPE_CONSTANT } from "../../../Mapping/Response/productTypeResp
 const List = props => {
     const columns = [
         {
-            title: TEXT_DEFINE.PAGE.PRODUCT_TYPE.name,
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
             title: TEXT_DEFINE.PAGE.PRODUCT_TYPE.code,
             dataIndex: 'code',
             key: 'code',
+        },
+        {
+            title: TEXT_DEFINE.PAGE.PRODUCT_TYPE.name,
+            dataIndex: 'name',
+            key: 'name',
         },
         {
             title: TEXT_DEFINE.PAGE.PRODUCT_TYPE.created_at,
@@ -44,6 +44,7 @@ const List = props => {
 
     return <Wrapper>
         <Table 
+            onChange={props.onTableChange}
             rowKey="id"
             bordered
             columns={columns}

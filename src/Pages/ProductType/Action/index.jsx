@@ -44,27 +44,43 @@ const ProductTypeAction = props => {
             isFetching: props.attributes.isAccessoryFetching,
             result: props.attributes.all,
             item: props.attributes.item
-        })
+        });
     }, [props.attributes]);
 
     useEffect(() => {
+        if (attributes.result.length > 0) {
+            let listAttributesIds = { attributes: [] },
+                listFilter = [];
+            (attributes.result || []).map(attribute => {
+                if (attribute?.required_field && !listAttributesIds.attributes.includes(attribute?.id)) {
+                    listAttributesIds = { attributes: [...listAttributesIds.attributes, attribute?.id] };
+                    listFilter = [...listFilter, attribute];
+                }
+            });
+            form.setFieldsValue(listAttributesIds);
+            setFilter(listFilter);
+        }
         if (Object.keys(props.productTypes).length > 0) {
             form.setFieldsValue(props.productTypes.item);
-            if ((props.productTypes.item?.attributes || []).length > 0) {
-                form.setFieldsValue({ attributes: (props.productTypes.item?.attributes || []).map(item => item?.id) })
+            if ((props.productTypes.item?.attributes || []).length > 0 && attributes.result.length > 0) {
+                let listAttributesIds = { attributes: (props.productTypes.item?.attributes || []).map(item => item?.id) || [] },
+                    listFilter = [...props.productTypes.item?.attributes];
+                (attributes.result || []).map(attribute => {
+                    if (attribute?.required_field && !listAttributesIds.attributes.includes(attribute?.id)) {
+                        listAttributesIds = { attributes: [...listAttributesIds.attributes, attribute?.id] };
+                        listFilter = [...listFilter, attribute];
+                    }
+                });
+                setFilter(listFilter);
+                form.setFieldsValue(listAttributesIds);
             }
             if ((Object.keys(props.productTypes.item?.filter || {}).length > 0 && attributes.result.length > 0)) {
-                let listFilter = Object.keys(props.productTypes.item?.filter || {}).map(item => {
-                    return _.find(attributes.result, { id: item })
-                });
                 Object.keys(props.productTypes.item?.filter || {}).map(item => {
                     form.setFieldsValue({ [`filter.${item}.value`]: props.productTypes.item?.filter[item]?.value || [] })
                 });
-                setFilter(listFilter);
             }
         }
     }, [props.productTypes, attributes.result]);
-    // console.log(props.productTypes.item)
 
     const onFieldChange = (field, allField) => {
         if (field[0]?.name[0] === "attributes") {
@@ -77,7 +93,7 @@ const ProductTypeAction = props => {
     }
 
     const handleSubmit = e => {
-        let newPayload = { ...e, ...routeProps , status: 2};
+        let newPayload = { ...e, ...routeProps, status: 2 };
         let filterParams = {};
         Object.keys(e).map((item) => {
             if (item.includes("filter")) {
@@ -93,6 +109,14 @@ const ProductTypeAction = props => {
             props.update(params.id, newPayload);
         } else {
             props.create(newPayload);
+        }
+    }
+
+    const handleAttributeDeselect = (value) => {
+        const currentAttribute = find(attributes.result, { id: value });
+        if (currentAttribute?.required_field) {
+            form.setFieldsValue({ attributes: [...form.getFieldValue("attributes"), currentAttribute?.id] });
+            message.warning("Thông số này không thể thiếu trong loại sản phẩm " + form.getFieldValue("name") || "")
         }
     }
 
@@ -150,7 +174,7 @@ const ProductTypeAction = props => {
                         name="attributes"
                         label={TEXT_DEFINE.PAGE.PRODUCT_TYPE.accessories}
                     >
-                        <Select mode="multiple">
+                        <Select mode="multiple" onDeselect={handleAttributeDeselect}>
                             {(attributes.result || []).length > 0 && (attributes.result || []).map(item => <Select.Option key={item.id} value={item.id}>
                                 {item.name}
                             </Select.Option>)}

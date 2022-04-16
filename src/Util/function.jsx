@@ -166,7 +166,7 @@ export const generateColumnTable = (params) => {
 
 export function removeObjectEmptyValue(obj) {
   return obj && Object.entries(obj)
-    .filter(([_, v]) => !!v)
+    .filter(([_, v]) => !!v || v === 0)
     .reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {});
 }
 
@@ -177,7 +177,7 @@ export const customOptionSelect = (data, params) => {
       let object = {};
       params.map((i2, k) => {
         if (k === 0) {
-          object = { children: i[i2] }
+          object = { label: i[i2] }
         } else if (k === 1) {
           object = { ...object, value: i[i2] }
         } else {
@@ -228,3 +228,17 @@ export function getThumbsUrl(thumb = {}) {
       }
   ] || []; 
 }
+
+export const genaratePaginateFilterSort = (pagination, filters, sorter, skipQueryParse = false) => {
+  let paramsFilter = skipQueryParse ? filters : queryString.parse(queryString.stringify(filters));
+  paramsFilter = Object.keys(paramsFilter).length > 0 ? paramsFilter : undefined;
+  let newFilters = {
+      ...paramsFilter,
+      page_index: pagination ? pagination.current : {},
+      page_size: pagination ? pagination.pageSize : undefined,
+      order_by: sorter.field,
+      order_by_desc: sorter.field ? sorter.order === 'descend' : undefined
+  };
+  newFilters = removeObjectEmptyValue(newFilters);
+  return newFilters;
+};

@@ -7,7 +7,8 @@ import AttributeAction from "./Attributes/Action";
 import AttributeList from "./Attributes/List";
 import ProductTypeList from "./ProductType/List";
 import DiscountAction from "./Discount/Action";
-import DiscountList from "./Discount/List"
+import DiscountList from "./Discount/List";
+import Dashboard from "./Dashboard/List";
 
 const Layout = {
     ProductAction,
@@ -19,7 +20,8 @@ const Layout = {
     AttributeAction,
     AttributeList,
     DiscountAction,
-    DiscountList
+    DiscountList,
+    Dashboard
 }
 
 export default Layout;

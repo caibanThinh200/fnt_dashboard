@@ -7,6 +7,8 @@ import Wrapper from "../../../Component/Wrapper";
 import TEXT_DEFINE from "../../../Constant/textDefine";
 import categoryThunk from "../../../thunk/categoryThunk";
 import List from "./List";
+import queryString from "query-string";
+import { genaratePaginateFilterSort, removeObjectEmptyValue } from "../../../Util/function";
 
 const CategoryList = props => {
     const [category, setCategory] = useState({
@@ -14,18 +16,32 @@ const CategoryList = props => {
         result: [],
         item: {}
     }),
+    [filter, setFilter] = useState({}),
     routeProps = useOutletContext();
 
     useEffect(() => {
-        props.getList();
-    }, [])
+        let filterParams = {}
+        if (routeProps.location?.search) {
+            filterParams = queryString.parse(routeProps.location?.search);
+            setFilter(filterParams);
+        }
+        props.getList(filterParams);
+    }, [routeProps.location]);
 
     useEffect(() => {
         setCategory({
             isFetching: props.categories?.isCategoryFetching,
             result: props.categories?.result,
         })
-    }, [props.categories])
+    }, [props.categories]);
+
+    const onTableChange = (pagination, filters, sorter) => {
+        const newFilter = genaratePaginateFilterSort(pagination, filters, sorter);
+        setFilter({ ...filter, ...newFilter });
+        props.getList(removeObjectEmptyValue({ ...filter, ...newFilter }));
+        const queryFilter = queryString.stringify(removeObjectEmptyValue({ ...filter, ...newFilter }));
+        routeProps.navigate("/category?" + queryFilter);
+    }
 
     const pagination = {
         page_index: props.categories.page_index || 1,
@@ -38,6 +54,7 @@ const CategoryList = props => {
         <List
             routeProps={routeProps}
             // typeResult={productType.result}
+            onTableChange={onTableChange}
             isLoading={category.isFetching}
             pagination={pagination}
             dataSource={category.result}

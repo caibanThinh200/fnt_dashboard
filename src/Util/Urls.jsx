@@ -53,5 +53,13 @@ export default {
     },
     UPLOAD: {
         loadFile: "/upload"
-    }
+    },
+    ORDER: {
+        checkoutOrder: "/order",
+        paymentOrder: "/order/payment/:id",
+        getDetail: "/order/detail/:id",
+        getList: "/order",
+        getRevenue: "/order/revenue",
+        updateStatus: "/order/status/:id"
+    },
 }

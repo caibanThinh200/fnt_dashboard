@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from 'react-router';
+import { Outlet, useNavigate, useLocation } from 'react-router';
 import Container from "../Pages/Container";
 
 // const MenuBar = (component: React.ReactElement) => <Navigation>
@@ -6,8 +6,11 @@ import Container from "../Pages/Container";
 // </Navigation>
 const SecureRoute = (props) => {
     const navigate = useNavigate();
+    const location = useLocation();
+
     const routerProps = {
-        navigate
+        navigate,
+        location
     }
 
     return <Container {...routerProps}>

@@ -23,19 +23,22 @@ const AttributeAction = props => {
             setAction(TEXT_DEFINE.ACTION.updated);
             props.getDetail(params.id);
         }
+        return () => {
+            props.onClearArttribute()
+        }
     }, [params.id])
-
+    console.log(props.attributes.item);
     useEffect(() => {
         if (Object.keys(props.attributes.item).length > 0) {
-            if(props.attributes.item.filter?.option) {
-                form.setFieldsValue({"filter.option": props.attributes.item.filter?.option})
+            if (props.attributes.item.filter?.option) {
+                form.setFieldsValue({ "filter.option": props.attributes.item.filter?.option })
             }
             form.setFieldsValue(props.attributes.item);
         }
     }, [props.attributes]);
 
     const handleSubmit = e => {
-        let newPayload = { ...e, ...routeProps , status: 2};
+        let newPayload = { ...e, ...routeProps, status: 2 };
         let filterParams = {};
         Object.keys(e).map((item) => {
             if (item.includes("filter")) {
@@ -124,9 +127,26 @@ const AttributeAction = props => {
                     />
                 </FormItem>
                 <FormItem
+                    name="value_type"
+                    label={TEXT_DEFINE.PAGE.ACCESSORY.valueType}
+                >
+                    <Radio.Group
+                        options={ACCESSORY_CONSTANT.value_type}
+                        optionType="button"
+                        buttonStyle="solid"
+                    />
+                </FormItem>
+                <FormItem
                     valuePropName="checked"
                     name="require"
                     label={TEXT_DEFINE.PAGE.ACCESSORY.required}
+                >
+                    <Switch />
+                </FormItem>
+                <FormItem
+                    valuePropName="checked"
+                    name="required_field"
+                    label={TEXT_DEFINE.PAGE.ACCESSORY.required_field}
                 >
                     <Switch />
                 </FormItem>
@@ -143,6 +163,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     getDetail: id => AttributeThunk.getDetail(id),
     update: (id, data) => AttributeThunk.update(id, data),
     create: data => AttributeThunk.create(data),
+    onClearArttribute: () => AttributeThunk.clear()
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AttributeAction);

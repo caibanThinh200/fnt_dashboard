@@ -16,7 +16,8 @@ const accessoryAction = {
     getListAccessoryFailed: createAction(Types.GET_LIST_ACCESSORY_FAILED),
     getListAllAccessoryFailed: createAction(Types.GET_LIST_ALL_ACCESSORY_FAILED),
     getDetailAccessoryFailed: createAction(Types.GET_DETAIL_ACCESSORY_FAILED),
-    updateAccessoryFailed: createAction(Types.UPDATE_ACCESSORY_FAILED)
+    updateAccessoryFailed: createAction(Types.UPDATE_ACCESSORY_FAILED),
+    clearAccessoryAction: createAction(Types.CLEAR_ACCESSORY_ACTION)
 }
 
 export default accessoryAction;

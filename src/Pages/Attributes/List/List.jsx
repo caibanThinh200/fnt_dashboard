@@ -9,14 +9,14 @@ import { PRODUCT_CONSTANT } from "../../../Mapping/Response/productResponse";
 const List = props => {
     const columns = [
         {
-            title: TEXT_DEFINE.PAGE.ACCESSORY.name,
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
             title: TEXT_DEFINE.PAGE.ACCESSORY.code,
             dataIndex: 'code',
             key: 'code',
+        },
+        {
+            title: TEXT_DEFINE.PAGE.ACCESSORY.name,
+            dataIndex: 'name',
+            key: 'name',
         },
         {
             title: TEXT_DEFINE.PAGE.ACCESSORY.created_at,
@@ -45,6 +45,7 @@ const List = props => {
         <Table
             rowKey="id"
             bordered
+            onChange={props.onTableChange}
             columns={columns}
             loading={props.isLoading}
             dataSource={props.dataSource}

@@ -9,14 +9,14 @@ import { PRODUCT_CONSTANT } from "../../../Mapping/Response/productResponse";
 const List = props => {
     const columns = [
         {
-            title: TEXT_DEFINE.PAGE.CATEGORY.name,
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
             title: TEXT_DEFINE.PAGE.CATEGORY.code,
             dataIndex: 'code',
             key: 'code',
+        },
+        {
+            title: TEXT_DEFINE.PAGE.CATEGORY.name,
+            dataIndex: 'name',
+            key: 'name',
         },
         {
             title: TEXT_DEFINE.PAGE.CATEGORY.created_at,
@@ -34,7 +34,7 @@ const List = props => {
             title: TEXT_DEFINE.PAGE.CATEGORY.status,
             dataIndex: 'status',
             key: "status",
-            render: value => <Tag color={find(CATEGORY_CONSTANT.STATUS_DEFINE, {value: value})?.color}>{find(CATEGORY_CONSTANT.STATUS_DEFINE, {value: value})?.title}</Tag>
+            render: value => <Tag color={find(CATEGORY_CONSTANT.STATUS_DEFINE, { value: value })?.color}>{find(CATEGORY_CONSTANT.STATUS_DEFINE, { value: value })?.title}</Tag>
         },
         {
             title: TEXT_DEFINE.PAGE.CATEGORY.action,
@@ -44,8 +44,9 @@ const List = props => {
     ];
 
     return <Wrapper>
-        <Table 
-        rowKey="id"
+        <Table
+            rowKey="id"
+            onChange={props.onTableChange}
             bordered
             columns={columns}
             loading={props.isLoading}
