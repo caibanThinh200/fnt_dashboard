@@ -3,11 +3,12 @@ import Urls from '../Util/Urls';
 import ApiResponse from '../Mapping/ApiResponse';
 import ProductTypeResponse from '../Mapping/Response/productTypeResponse';
 import { omit } from 'lodash';
+import currentConfig from '../Constant/env';
 
 
 export const getListService = (params) => {
     return new ApiService({
-        baseURL: process.env.REACT_APP_FURNITURE_DEV_HOST || "",
+        baseURL: currentConfig.API_URL || "",
         endpoint: Urls.PRODUCT_TYPE.getList,
         params: params,
         parser: parseData
