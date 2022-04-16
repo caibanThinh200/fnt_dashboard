@@ -1,4 +1,4 @@
-import currentConfig from "../../../azp-website/src/Constant/env";
+import currentConfig from "../Constant/env";
 import DashboardResponse from "../Mapping/Response/dashboardResponse";
 import ApiService from "../Util/ApiService";
 import Urls from "../Util/Urls";

@@ -2,7 +2,7 @@ import ApiService from '../Util/ApiService';
 import Urls from '../Util/Urls';
 import ApiResponse from '../Mapping/ApiResponse';
 import AccessoryResponse from '../Mapping/Response/attributeResponse';
-import currentConfig from '../../../azp-website/src/Constant/env';
+import currentConfig from '../Constant/env';
 
 export const getListService = (params) => {
     return new ApiService({

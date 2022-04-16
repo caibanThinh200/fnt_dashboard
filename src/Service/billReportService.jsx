@@ -3,7 +3,7 @@ import BillResponse from "../Mapping/Response/billResponse";
 import ApiService from "../Util/ApiService"
 import Urls from "../Util/Urls"
 import DashboardResponse from '../Mapping/Response/dashboardResponse';
-import currentConfig from "../../../azp-website/src/Constant/env";
+import currentConfig from "../Constant/env";
 
 export const getListService = (params) => {
     return new ApiService({

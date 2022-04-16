@@ -3,7 +3,7 @@ import Urls from '../Util/Urls';
 import ApiResponse from '../Mapping/ApiResponse';
 import ProductResponse from '../Mapping/Response/productResponse';
 import { get } from 'lodash';
-import currentConfig from '../../../azp-website/src/Constant/env';
+import currentConfig from '../Constant/env';
 
 
 export const getListService = (params) => {

@@ -2,7 +2,7 @@ import CategoryResponse from '../Mapping/Response/categoryResponse';
 import ApiService from '../Util/ApiService';
 import ApiResponse from '../Mapping/ApiResponse';
 import Urls from '../Util/Urls';
-import currentConfig from '../../../azp-website/src/Constant/env';
+import currentConfig from '../Constant/env';
 
 export const getListService = () => {
     return new ApiService({
