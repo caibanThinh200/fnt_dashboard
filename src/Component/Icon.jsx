@@ -22,7 +22,8 @@ import {
     InboxOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    WarningOutlined
+    WarningOutlined,
+    FileTextOutlined
 } from "@ant-design/icons";
 import { omit } from 'lodash';
 
@@ -70,6 +71,7 @@ export default class Icon extends Component {
             case "delete":
                 return (
                     <DeleteOutlined {...props}
+                        style={props.style}
                         className={`furniture_icon ${className || ''}`}>{this.props.children}</DeleteOutlined>
                 );
             case "form":
@@ -152,6 +154,11 @@ export default class Icon extends Component {
                     <WarningOutlined {...props}
                         className={`furniture_icon ${className || ''}`}>{this.props.children}</WarningOutlined>
                 );
+                case "text":
+                    return (
+                        <FileTextOutlined {...props}
+                            className={`furniture_icon ${className || ''}`}>{this.props.children}</FileTextOutlined>
+                    );
             default:
                 return "";
         }

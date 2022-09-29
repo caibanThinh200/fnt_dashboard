@@ -273,7 +273,7 @@ const ProductAction = props => {
                         label={TEXT_DEFINE.PAGE.PRODUCT.code}
                         name="code"
                     >
-                        <Input disabled />
+                        <Input />
                     </FormItem>
                     <FormItem
                         colon={false}

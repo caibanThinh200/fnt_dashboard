@@ -68,6 +68,7 @@ const Navigation = props => {
                     <Menu
                         className='h-100'
                         mode="inline"
+                        defaultOpenKeys={routes.map(item => item.name)}
                     >
                         {
                             routes.map((item, index) => {

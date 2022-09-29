@@ -72,7 +72,6 @@ const getDetail = (id, isUpdate = false) => {
 const update = (id, data) => async dispatch => {
     dispatch(ProductTypeAction.updateProductTypeAction());
     const requestPayload = new ProductTypeRequest(data);
-    console.log(requestPayload)
     const res = await updateService(id, requestPayload);
     if (res.status === "FAILED") {
         message.error("Đã có lỗi xảy ra");

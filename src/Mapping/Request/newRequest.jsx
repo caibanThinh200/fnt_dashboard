@@ -1,12 +1,10 @@
-export default class CategoryRequest {
+class NewRequest {
     constructor(data) {
         this.setData(data)
     }
 
     setData(data) {
-        this.name = data?.name || ''
-        this.status = data?.status || 1
-        this.code = data?.code || ''
+        this.title = data?.title || ''
         this.thumb =
             ((data?.thumb || []).length > 0 && {
                 ...data?.thumb[0],
@@ -15,9 +13,11 @@ export default class CategoryRequest {
                     : data.thumb[0]?.url,
             }) ||
             {}
-    }
-
-    getThumbUrl(thumb = []) {
-        return (thumb.length > 0 && thumb[0]) || {}
+        this.type = data?.type || 0
+        this.content = data?.content || ''
+        this.status = data?.status || 0
+        this.author = data?.author || ''
     }
 }
+
+export default NewRequest

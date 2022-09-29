@@ -4,7 +4,25 @@ const routes = [
         name: 'dashboard',
         icon: 'dashboard',
         path: '/',
-        hidden: false
+        hidden: false,
+        
+    },
+    {
+        title: 'Nội dung',
+        icon: 'text',
+        name: 'content',
+        subMenu: [
+            {
+                title: 'Quản lí bảng tin',
+                name: 'new',
+                path: '/new',
+            },
+            {
+                title: 'Quản lí thông tin',
+                name: 'layout',
+                path: '/cms-info',
+            },
+        ],
     },
     {
         title: 'Sản phẩm',
@@ -12,26 +30,26 @@ const routes = [
         name: 'productSub',
         subMenu: [
             {
-                title: "Danh sách sản phẩm",
-                name: "productList",
-                path: "/product"
+                title: 'Danh sách sản phẩm',
+                name: 'productList',
+                path: '/product',
             },
             {
-                title: "Danh sách loại sản phẩm",
-                name: "product-type",
-                path: "/product-type"
+                title: 'Danh sách loại sản phẩm',
+                name: 'product-type',
+                path: '/product-type',
             },
             {
-                title: "Thông số sản phẩm",
-                name: "attribute",
-                path: "/attribute"
+                title: 'Thông số sản phẩm',
+                name: 'attribute',
+                path: '/attribute',
             },
             {
-                title: "Danh mục sản phẩm",
-                name: "category",
-                path: "/category"
-            }
-        ]
+                title: 'Danh mục sản phẩm',
+                name: 'category',
+                path: '/category',
+            },
+        ],
     },
     {
         title: 'Sự kiện',
@@ -39,12 +57,12 @@ const routes = [
         name: 'discountSub',
         subMenu: [
             {
-                title: "Danh sách khuyến mãi",
+                title: 'Danh sách khuyến mãi',
                 name: 'discountList',
-                path: "/discount"
-            }
-        ]
+                path: '/discount',
+            },
+        ],
     }
-];
+]
 
-export default routes;
+export default routes

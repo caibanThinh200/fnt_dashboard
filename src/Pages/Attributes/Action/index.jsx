@@ -17,7 +17,6 @@ const AttributeAction = props => {
         [form] = Function.useForm(),
         routeProps = useOutletContext(),
         [action, setAction] = useState(TEXT_DEFINE.ACTION.create);
-
     useEffect(() => {
         if (params.id) {
             setAction(TEXT_DEFINE.ACTION.updated);

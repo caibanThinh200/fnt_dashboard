@@ -5,7 +5,6 @@ class ProductTypeRequest {
     }
 
     setData(data) {
-        console.log(data?.thumb)
         this.id = data._id || "";
         this.name = data.name || "";
         this.type = this.parseTypeNumber(data.type);
